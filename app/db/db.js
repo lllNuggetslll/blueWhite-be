@@ -1,0 +1,35 @@
+import low from "lowdb";
+import FileAsync from "lowdb/adapters/FileAsync.js";
+
+export default (async () => {
+  const adapter = new FileAsync("user.json");
+  const db = await low(adapter);
+
+  db
+    .defaults({
+      users: [
+        {
+          _id: "5410953eb0e0c0ae25608277",
+          guid: "eab0324c-75ef-49a1-9c49-be2d68f50b96",
+          isActive: true,
+          balance: "$3,585.69",
+          picture: "http://placehold.it/32x32",
+          age: 30,
+          eyeColor: "blue",
+          name: {
+            first: "Henderson",
+            last: "Briggs"
+          },
+          company: "GEEKNET",
+          email: "henderson.briggs@geeknet.net",
+          salt: "23derd*334",
+          password: "9e4d16b6e67aa3a9b2fbb6a488bf32fb53bc34a7",
+          phone: "+1 (936) 451-3590",
+          address: "121 National Drive, Cotopaxi, Michigan, 8240"
+        }
+      ]
+    })
+    .write();
+
+  return db;
+})();
