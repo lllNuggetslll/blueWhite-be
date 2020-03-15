@@ -1,0 +1,40 @@
+{
+  "name": "bluewhite-be",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/polyfill": "^7.8.7",
+    "@std/esm": "^0.26.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "lowdb": "^1.0.0",
+    "node": "^13.10.1",
+    "shortid": "^2.2.15"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "babel-preset-latest-node": "^4.0.1",
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --experimental-modules ./app/server.js",
+    "watch": "nodemon ./app/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lllNuggetslll/blueWhite-be.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lllNuggetslll/blueWhite-be/issues"
+  },
+  "homepage": "https://github.com/lllNuggetslll/blueWhite-be#readme"
+}
