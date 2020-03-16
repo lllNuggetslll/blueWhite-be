@@ -1,9 +1,11 @@
 import express from "express";
+import { auth } from "./../auth/auth.js";
 
 const router = express.Router();
 
 const routes = dbControllers => {
   const {
+    loginUser,
     fetchUser,
     updateUser,
     deleteUser,
@@ -11,19 +13,15 @@ const routes = dbControllers => {
     userCount
   } = dbControllers;
 
-  router.get("/login", (req, res) => {
-    // const users = db.get("users").value();
-    //
-    // res.status(200).send(users);
-  });
+  router.post("/login", auth.optional, loginUser);
 
-  router.get("/fetchUser", fetchUser);
+  router.get("/fetchUser", auth.required, fetchUser);
 
-  router.put("/updateUser", updateUser);
+  router.put("/updateUser", auth.required, updateUser);
 
-  router.delete("/deleteUser", deleteUser);
+  router.delete("/deleteUser", auth.required, deleteUser);
 
-  router.post("/createUser", createUser);
+  router.post("/createUser", auth.optional, createUser);
 
   router.get("/userCount", userCount);
 
