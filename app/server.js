@@ -36,6 +36,9 @@ export default db
   })
   .then(() => {
     app.listen(PORT, () => {
-      console.log("hi");
+      console.log(
+        "Activate interlocks! Dyna-therms connected. Infra-cells up; mega-thrusters are go!",
+        `Port: ${PORT} ready!`
+      );
     });
   });

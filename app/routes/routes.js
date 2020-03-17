@@ -10,7 +10,7 @@ const routes = dbControllers => {
     updateUser,
     deleteUser,
     createUser,
-    userCount
+    getUserCount
   } = dbControllers;
 
   router.post("/login", auth.optional, loginUser);
@@ -23,7 +23,7 @@ const routes = dbControllers => {
 
   router.post("/createUser", auth.optional, createUser);
 
-  router.get("/userCount", userCount);
+  router.get("/getUserCount", getUserCount);
 
   return router;
 };
