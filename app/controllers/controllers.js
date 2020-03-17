@@ -8,6 +8,20 @@ import {
 
 import passport from "passport";
 
+const newUserTemplate = {
+  balance: "",
+  picture: "",
+  age: "",
+  eyeColor: "",
+  name: {
+    first: "",
+    last: ""
+  },
+  company: "",
+  phone: "",
+  address: ""
+};
+
 const controllers = db => {
   const Users = db.get("users");
 
@@ -24,7 +38,6 @@ const controllers = db => {
     if (!verifiedPassword)
       return res.status(400).send({ error: "Incorrect password." });
 
-    // send token
     return passport.authenticate("local", (err, passportUser, info) => {
       if (err) {
         return next(err);
@@ -42,22 +55,24 @@ const controllers = db => {
   };
 
   const fetchUser = (req, res) => {
-    const { email, password } = req.query;
-    const user = Users.find({ email, password }).value();
+    const { id } = req.query;
+    const { salt, password, ...user } = Users.find({ id }).value();
 
-    res.status(200).send(user);
+    res.status(200).send({ ...user });
   };
 
   const updateUser = (req, res) => {
-    const { email, password, ...rest } = req.body;
-
-    Users.find({ email, password })
-      .assign({ ...rest })
+    const { id, userData } = req.body;
+    console.log("userData", userData);
+    Users.find({ id })
+      .assign({ ...userData })
       .write();
 
-    const user = Users.find({ email, password }).value();
+    const { salt, password, token, ...rest } = Users.find({
+      id
+    }).value();
 
-    res.status(200).send(user);
+    res.status(200).send({ ...rest });
   };
 
   const deleteUser = (req, res) => {
@@ -77,7 +92,13 @@ const controllers = db => {
     } else {
       const id = shortid.generate();
 
-      Users.push({ id, email, salt, password: hash }).write();
+      Users.push({
+        ...newUserTemplate,
+        id,
+        email,
+        salt,
+        password: hash
+      }).write();
 
       const newUser = toAuthJSON(id, email);
 
@@ -85,7 +106,7 @@ const controllers = db => {
     }
   };
 
-  const userCount = (req, res) => {
+  const getUserCount = (req, res) => {
     const userCount = Users.size().value();
 
     res.status(200).send({ userCount });
@@ -97,7 +118,7 @@ const controllers = db => {
     updateUser,
     deleteUser,
     createUser,
-    userCount
+    getUserCount
   };
 };
 
